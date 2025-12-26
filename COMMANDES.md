@@ -24,60 +24,60 @@ Crée un nouveau template dans `rapports/semaine_X.md`
 
 ### Créer une issue
 ```bash
-cd scripts && python github_manager.py --create --repo supernestor --initials DP --title "Fix bug login" --description "Problème de connexion" --priority "Urgent" --entity "WEMEDIA"
+cd scripts && python3 github_manager.py --create --repo supernestor --initials DP --title "Fix bug login" --description "Problème de connexion" --priority "Urgent" --entity "WEMEDIA"
 ```
 
 ### Lister les issues
 ```bash
 # Toutes les issues ouvertes
-cd scripts && python github_manager.py --list
+cd scripts && python3 github_manager.py --list
 
 # Par dépôt
-cd scripts && python github_manager.py --list --repo supernestor
+cd scripts && python3 github_manager.py --list --repo supernestor
 
 # Par employé (initiales)
-cd scripts && python github_manager.py --list --filter-initials DP
+cd scripts && python3 github_manager.py --list --filter-initials DP
 
 # Par entité
-cd scripts && python github_manager.py --list --filter-entity WEMEDIA
+cd scripts && python3 github_manager.py --list --filter-entity WEMEDIA
 
 # Issues fermées
-cd scripts && python github_manager.py --list --status closed
+cd scripts && python3 github_manager.py --list --status closed
 ```
 
 ### Mettre à jour une issue
 ```bash
 # Fermer une issue
-cd scripts && python github_manager.py --close 123 --repo supernestor --comment "Tâche terminée"
+cd scripts && python3 github_manager.py --close --issue 123 --repo supernestor --comment "Tâche terminée"
 
 # Ajouter un label
-cd scripts && python github_manager.py --update 123 --repo supernestor --add-label "In Progress"
+cd scripts && python3 github_manager.py --update --issue 123 --repo supernestor --add-label "In Progress"
 
 # Ajouter un commentaire
-cd scripts && python github_manager.py --update 123 --repo supernestor --comment "En cours de développement"
+cd scripts && python3 github_manager.py --update --issue 123 --repo supernestor --comment "En cours de développement"
 ```
 
 ### Générer un rapport
 ```bash
-cd scripts && python github_manager.py --report --output rapports/projets.md
+cd scripts && python3 github_manager.py --report --output rapports/projets.md
 ```
 
 ### Importer des tâches depuis un fichier
 ```bash
-cd scripts && python github_manager.py --import tasks.json --repo supernestor --entity WEMEDIA
+cd scripts && python3 github_manager.py --import tasks.json --repo supernestor --entity WEMEDIA
 ```
 
 ## 🎯 Workflow quotidien
 
 **Matin**
-1. `python ceo_automations.py emails` - Voir les emails importants
-2. `python ceo_automations.py priorites` - Revoir les priorités
-3. `python github_manager.py --list --filter-initials DP` - Voir mes issues en cours
+1. `python3 ceo_automations.py emails` - Voir les emails importants
+2. `python3 ceo_automations.py priorites` - Revoir les priorités
+3. `python3 github_manager.py --list --filter-initials DP` - Voir mes issues en cours
 4. Mettre à jour `priorites.md`
 
 **Lundi**
-- `python ceo_automations.py checkin` - Démarrer le weekly check-in
-- `python github_manager.py --report` - Générer rapport projets
+- `python3 ceo_automations.py checkin` - Démarrer le weekly check-in
+- `python3 github_manager.py --report` - Générer rapport projets
 - Remplir `rapports/semaine_X.md`
 
 **Vendredi**

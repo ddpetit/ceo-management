@@ -82,7 +82,7 @@ cd scripts && python3 github_manager.py --import tasks.json --repo supernestor -
 ## 7. Mettre à jour le statut d'une issue
 
 ```bash
-cd scripts && python3 github_manager.py --update 42 --repo bricov4 --add-label "In Progress"
+cd scripts && python3 github_manager.py --update --issue 42 --repo bricov4 --add-label "In Progress"
 ```
 
 ## Usage quotidien recommandé

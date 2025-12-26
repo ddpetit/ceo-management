@@ -59,17 +59,17 @@ Exemples :
 
 **Créer une issue** :
 ```bash
-cd scripts && python github_manager.py --create --repo supernestor --initials DP --title "Fix bug login"
+cd scripts && python3 github_manager.py --create --repo supernestor --initials DP --title "Fix bug login"
 ```
 
 **Voir mes issues** :
 ```bash
-cd scripts && python github_manager.py --list --filter-initials DP
+cd scripts && python3 github_manager.py --list --filter-initials DP
 ```
 
 **Générer un rapport** :
 ```bash
-cd scripts && python github_manager.py --report
+cd scripts && python3 github_manager.py --report
 ```
 
 Pour plus de commandes, voir `COMMANDES.md`
@@ -83,7 +83,7 @@ Pour plus de commandes, voir `COMMANDES.md`
 
 **Résumé des emails** :
 ```bash
-cd scripts && python ceo_automations.py emails
+cd scripts && python3 ceo_automations.py emails
 ```
 
 Pour la configuration Gmail, voir `automatisations/gmail_setup.md`
@@ -91,8 +91,8 @@ Pour la configuration Gmail, voir `automatisations/gmail_setup.md`
 ## 📈 Workflow Hebdomadaire
 
 **Lundi**
-- Weekly check-in : `python ceo_automations.py checkin`
-- Rapport projets : `python github_manager.py --report`
+- Weekly check-in : `python3 ceo_automations.py checkin`
+- Rapport projets : `python3 github_manager.py --report`
 - Définir priorités de la semaine
 
 **Mercredi**

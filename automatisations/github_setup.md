@@ -43,10 +43,28 @@ load_dotenv()
 
 Testez que tout fonctionne :
 ```bash
-cd scripts && python github_manager.py --list
+cd scripts && python3 github_manager.py --list
 ```
 
 Cela devrait afficher toutes les issues ouvertes de vos dépôts.
+
+## Résoudre les erreurs 403 (Permissions refusées)
+
+Si vous obtenez une erreur `403: Forbidden` lors de la création ou modification d'issues :
+
+1. Vérifiez que votre token a bien la permission `repo` (accès complet)
+2. Révoquez l'ancien token et créez-en un nouveau avec les permissions correctes
+3. Mettez à jour le fichier `scripts/.env` avec le nouveau token
+4. Testez à nouveau : `cd scripts && python3 github_manager.py --create --repo ceo-management --initials XX --title "Test"`
+
+## Permissions requises
+
+Le token GitHub doit avoir les permissions suivantes pour toutes les fonctionnalités :
+- ✅ `repo` - Créer, modifier, fermer des issues
+- ✅ `repo:status` - Accès au statut des commits
+- ✅ `repo_deployment` - Déploiements
+- ✅ `public_repo` - Accès aux dépôts publics
+- ✅ `read:org` - Lecture des organisations
 
 ## Sécurité
 
