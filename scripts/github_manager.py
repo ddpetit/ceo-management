@@ -9,6 +9,10 @@ import json
 import argparse
 from datetime import datetime
 from github import Github, GithubException
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement depuis .env
+load_dotenv()
 
 # Configuration
 ORGANIZATION = "ddpetit"
