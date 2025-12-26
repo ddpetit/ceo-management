@@ -67,8 +67,7 @@ def decode_message(msg):
 def get_recent_emails(service, days=0, max_emails=None):
     # Récupère TOUS les emails de l'inbox si days=0 et max_emails=None
     if days > 0:
-        yesterday = datetime.now() - timedelta(days=days)
-        query = f'in:inbox after:{yesterday.strftime("%Y/%m/%d")}'
+        query = f'in:inbox newer_than:{days}d'
     else:
         query = 'in:inbox'
     

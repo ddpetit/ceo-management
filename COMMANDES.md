@@ -67,13 +67,28 @@ cd scripts && python3 github_manager.py --report --output rapports/projets.md
 cd scripts && python3 github_manager.py --import tasks.json --repo supernestor --entity WEMEDIA
 ```
 
+### Gestion des tâches pendant la journée
+```bash
+# Voir le statut
+python3 scripts/task_manager.py status
+
+# Mettre à jour le statut d'une tâche
+python3 scripts/task_manager.py update
+
+# Ajouter une nouvelle tâche
+python3 scripts/task_manager.py add
+```
+
 ## 🎯 Workflow quotidien
 
 **Matin**
-1. `python3 ceo_automations.py emails` - Voir les emails importants
-2. `python3 ceo_automations.py priorites` - Revoir les priorités
-3. `python3 github_manager.py --list --filter-initials DP` - Voir mes issues en cours
-4. Mettre à jour `priorites.md`
+1. Daily Checkin
+2. `python3 github_manager.py --list --filter-initials DP` - Voir mes issues en cours
+3. Mettre à jour `priorites.md`
+
+**Pendant la journée**
+- `python3 scripts/task_manager.py status` - Voir progression
+- `python3 scripts/task_manager.py update` - Faire avancer les tâches
 
 **Lundi**
 - `python3 ceo_automations.py checkin` - Démarrer le weekly check-in
@@ -88,9 +103,12 @@ cd scripts && python3 github_manager.py --import tasks.json --repo supernestor -
 ## ⚡ Rapide
 
 Je peux exécuter ces commandes pour vous. Dites-moi simplement :
+- "checkin" pour le daily checkin complet (emails + tâches)
+- "status" ou "tâches" pour voir l'avancement du jour
+- "mise à jour" pour faire avancer vos tâches
 - "résumé emails" pour voir les emails
 - "voir priorités" pour afficher vos priorités
-- "checkin" pour créer un rapport hebdomadaire
+- "weekly checkin" pour créer un rapport hebdomadaire
 - "mes issues" pour voir vos issues en cours
 - "créer issue" pour créer une nouvelle issue
 - "rapport projets" pour générer le rapport
