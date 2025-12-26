@@ -8,7 +8,7 @@ import sys
 import json
 import argparse
 from datetime import datetime
-from github import Github, GithubException
+from github import Github, GithubException, Auth
 from dotenv import load_dotenv
 
 # Charger les variables d'environnement depuis .env
@@ -16,10 +16,7 @@ load_dotenv()
 
 # Configuration
 ORGANIZATION = "ddpetit"
-REPOSITORIES = {
-    "PETITJEAN": ["bricov4"],
-    "WEMEDIA": ["supernestor", "comparat", "comparem", "zagrow", "my_zagrow"]
-}
+REPOSITORIES = ["ceo-management"]
 PRIORITIES = ["Urgent", "Normal", "Low"]
 STATUSES = ["Todo", "In Progress", "Review", "Done"]
 ENTITIES = ["WEMEDIA", "PETITJEAN"]
@@ -30,7 +27,8 @@ class GitHubManager:
         self.token = token or os.getenv("GITHUB_TOKEN")
         if not self.token:
             raise ValueError("GITHUB_TOKEN non trouvé. Exportez-le ou passez-le en argument.")
-        self.gh = Github(self.token)
+        auth = Auth.Token(self.token)
+        self.gh = Github(auth=auth)
 
     def get_repository(self, repo_name):
         """Récupère un dépôt"""
@@ -65,12 +63,15 @@ class GitHubManager:
             labels.append(entity)
         
         try:
-            issue = repo.create_issue(
-                title=formatted_title,
-                body=body,
-                labels=labels,
-                assignee=assignee
-            )
+            issue_params = {
+                'title': formatted_title,
+                'body': body,
+                'labels': labels
+            }
+            if assignee:
+                issue_params['assignee'] = assignee
+            
+            issue = repo.create_issue(**issue_params)
             print(f"✅ Issue créée: {issue.html_url}")
             return issue
         except GithubException as e:
@@ -81,7 +82,7 @@ class GitHubManager:
         """Liste les issues avec filtres"""
         issues_found = []
         
-        repos_to_search = [repo_name] if repo_name else [r for group in REPOSITORIES.values() for r in group]
+        repos_to_search = [repo_name] if repo_name else REPOSITORIES
         
         for repo_name in repos_to_search:
             try:
@@ -152,6 +153,11 @@ class GitHubManager:
     def generate_report(self, output_file="rapport_projets.md"):
         """Génère un rapport de toutes les issues"""
         all_issues = self.list_issues(status="open")
+        
+        # Créer le répertoire de sortie si nécessaire
+        output_dir = os.path.dirname(output_file)
+        if output_dir:
+            os.makedirs(output_dir, exist_ok=True)
         
         # Grouper par entité et projet
         grouped = {}
@@ -232,8 +238,9 @@ def main():
     parser.add_argument('--status', choices=['open', 'closed', 'all'], default='open')
     
     # Mettre à jour une issue
-    parser.add_argument('--update', type=int, help='Numéro de l\'issue à mettre à jour')
-    parser.add_argument('--close', action='store_true', help='Fermer l\'issue')
+    parser.add_argument('--issue', type=int, help='Numéro de l\'issue')
+    parser.add_argument('--update', action='store_true', help='Mettre à jour une issue')
+    parser.add_argument('--close', action='store_true', help='Fermer une issue')
     parser.add_argument('--add-label', action='append', help='Ajouter un label')
     parser.add_argument('--comment', help='Ajouter un commentaire')
     
@@ -287,16 +294,16 @@ def main():
             print()
     
     elif args.update or args.close:
-        if not args.repo:
-            print("❌ --repo est requis pour mettre à jour une issue")
+        if not args.repo or not args.issue:
+            print("❌ --repo et --issue sont requis pour mettre à jour/fermer une issue")
             sys.exit(1)
         
         if args.close:
-            manager.close_issue(args.repo, args.update, comment=args.comment)
+            manager.close_issue(args.repo, args.issue, comment=args.comment)
         else:
             manager.update_issue(
                 repo_name=args.repo,
-                issue_number=args.update,
+                issue_number=args.issue,
                 add_labels=args.add_label,
                 comment=args.comment
             )
