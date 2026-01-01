@@ -1,6 +1,8 @@
+.env
+credentials.json
+token.pickle
+*.pickle
 .DS_Store
 .opencode
 node_modules
-credentials.json
-token.pickle
-.env
+package-lock.json

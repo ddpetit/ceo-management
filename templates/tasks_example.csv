@@ -1,4 +1,0 @@
-initials,title,description,priority
-DP,Configurer l'authentification JWT,Implémenter l'authentification JWT pour l'API,Urgent
-ML,Optimiser les requêtes base de données,Ajouter des index et optimiser les requêtes lentes,Normal
-JS,Mettre à jour la documentation API,Mettre à jour Swagger/OpenAPI,Low
